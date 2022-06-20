@@ -49,10 +49,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
-//                .authorizeRequests().antMatchers("/registration/**").permitAll()
                 .authorizeRequests().antMatchers(HttpMethod.POST,"/registration/**").permitAll()
-                .and()
-                .authorizeRequests().antMatchers("/users/**").hasAuthority("ROLE_USER");
+//                .and()
+//                .authorizeRequests().antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated();
     }
     @Bean
     public FilterRegistrationBean corsFilter(){
