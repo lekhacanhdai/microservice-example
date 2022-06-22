@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
@@ -16,6 +17,11 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 @EnableResourceServer
+@EnableMethodSecurity(
+        securedEnabled = true,
+        prePostEnabled = true,
+        jsr250Enabled = true
+)
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -26,14 +32,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/oauth/**").permitAll()
                 .antMatchers(HttpMethod.POST,"/registration/**", "/api-docs/**").permitAll()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/users/**").access("hasRole('USER')")
-                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .anyRequest().authenticated()
+//                .antMatchers("/users/**").access("hasRole('USER')")
+//                .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
     @Bean

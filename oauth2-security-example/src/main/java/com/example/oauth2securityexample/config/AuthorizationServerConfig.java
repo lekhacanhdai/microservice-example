@@ -65,7 +65,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .secret(passwordEncoder.encode(CLIENT_SECRET))
                 .authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT)
                 .scopes(SCOPE_READ, SCOPE_WRITE, TRUST)
-                .redirectUris("http://localhost:8081")
+//                .redirectUris("http://localhost:8081")
                 .accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECOND)
                 .refreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECOND);
     }

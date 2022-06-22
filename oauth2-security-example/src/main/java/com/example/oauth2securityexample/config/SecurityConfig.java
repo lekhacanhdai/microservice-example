@@ -15,8 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -49,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
-                .authorizeRequests().antMatchers(HttpMethod.POST,"/registration/**").permitAll()
+                .authorizeRequests().antMatchers(HttpMethod.POST,"/registration").permitAll()
 //                .and()
 //                .authorizeRequests().antMatchers("/users/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();

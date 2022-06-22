@@ -6,8 +6,8 @@ import com.example.userservice.repository.UserRepository;
 import com.example.userservice.service.RoleService;
 import com.example.userservice.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,11 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepo;
+    private final UserRepository userRepo;
 
-    @Autowired
-    private RoleService roleService;
+    private final RoleService roleService;
 
     @Override
     public UserEntity saveUser(UserEntity user) {
@@ -31,8 +29,16 @@ public class UserServiceImpl implements UserService {
         UserEntity user1 = findUserById(userId);
         user1.setUsername(user.getUsername());
         user1.setPassword(user.getPassword());
-        UserEntity userSave = userRepo.save(user1);
-        return userSave;
+        return userRepo.save(user1);
+    }
+
+    @Override
+    @Transactional
+    public UserEntity myUpdateUser(long userId, UserEntity user) {
+        UserEntity user1 = findUserById(userId);
+        user1.setUsername(user.getUsername());
+        user1.setPassword(user.getPassword());
+        return user1;
     }
 
     @Override

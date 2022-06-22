@@ -1,6 +1,7 @@
 package com.example.resourceserverexample;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.authentication.OAuth2AuthenticationDetails;
@@ -12,6 +13,9 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@Secured({
+        "ROLE_USER"
+})
 public class UserController {
 
     private final TokenStore tokenStore;

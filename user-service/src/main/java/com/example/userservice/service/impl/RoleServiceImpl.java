@@ -4,14 +4,12 @@ import com.example.userservice.model.Role;
 import com.example.userservice.repository.RoleRepository;
 import com.example.userservice.service.RoleService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class RoleServiceImpl implements RoleService {
-    @Autowired
-    private RoleRepository roleRepo;
+    private final RoleRepository roleRepo;
 
     @Override
     public Role findRoleByRoleName(String name) {

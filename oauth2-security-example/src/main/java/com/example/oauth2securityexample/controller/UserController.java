@@ -18,7 +18,7 @@ public class UserController {
     public ResponseEntity<List<UserEntity>> getAllUser(){
         return ResponseEntity.ok(userService.getAllUser());
     }
-
+    
     @PostMapping("/registration")
     public ResponseEntity<UserEntity> registration(@RequestBody UserEntity user){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.saveNewUser(user));

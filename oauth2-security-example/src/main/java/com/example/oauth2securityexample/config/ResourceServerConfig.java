@@ -22,13 +22,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .anonymous().disable()
                 .authorizeRequests()
                 .antMatchers("/oauth/**").permitAll()
-                .antMatchers(HttpMethod.POST,"/registration/**", "/api-docs/**").permitAll()
+                .antMatchers("/registration", "/api-docs/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .antMatchers("/users/**").access("hasRole('ADMIN')")
+                .anyRequest().authenticated()
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
 
     }

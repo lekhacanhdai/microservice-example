@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,12 +16,13 @@ import javax.ws.rs.HttpMethod;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 @RestController
+@AllArgsConstructor
 @Api(tags = "users", value = "UserController")
 public class UserController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @ApiOperation(value = "Get list user on the system", response = List.class, tags = "users", httpMethod = HttpMethod.GET)
     @ApiResponses(value = {
@@ -114,7 +115,7 @@ public class UserController {
 
     
 
-    @ApiOperation(value = "Update user", response = Void.class, tags = "users", httpMethod = HttpMethod.DELETE)
+    @ApiOperation(value = "Update user", tags = "users", httpMethod = HttpMethod.DELETE)
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "401", description = "Not authorized"),
@@ -133,6 +134,13 @@ public class UserController {
         Map<String, Boolean> res = new HashMap<>();
         res.put("deleted", Boolean.TRUE);
         return ResponseEntity.ok(res);
+    }
+
+
+    @PutMapping("/myupdate/{id}")
+    public ResponseEntity<UserEntity> myUpdate(@PathVariable long id, @RequestBody UserEntity user){
+        UserEntity response = userService.updateUser(id, user);
+        return ResponseEntity.ok(response);
     }
 
 }

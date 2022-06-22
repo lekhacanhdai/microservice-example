@@ -9,6 +9,8 @@ public interface UserService {
 
     UserEntity updateUser(long userId, UserEntity user);
 
+    UserEntity myUpdateUser(long userId, UserEntity user);
+
     UserEntity findUserById(long id);
 
     List<UserEntity> getAllUser();
